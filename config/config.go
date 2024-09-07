@@ -9,16 +9,20 @@ var (
 	logger *Logger
 )
 
-func Init() error {
+func GetDB() (*gorm.DB, error) {
 	var err error
+
+	if db != nil {
+		return db, nil
+	}
 
 	db, err = InitializeSQLite()
 
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	return err
+	return db, err
 
 }
 
