@@ -31,7 +31,7 @@ func InitializeSQLite() (*gorm.DB, error) {
 		return nil, err
 	}
 
-	if err = db.AutoMigrate(&schemas.Oppening{}); err != nil {
+	if err = db.AutoMigrate(&schemas.Opening{}); err != nil {
 		logger.Errorf("error when migrating schemas: %v", err)
 		return nil, err
 	}
