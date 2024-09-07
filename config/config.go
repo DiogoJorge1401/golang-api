@@ -9,13 +9,22 @@ var (
 	logger *Logger
 )
 
-func InitializeDatabaseConnection() error {
-	return nil
+func Init() error {
+	var err error
+
+	db, err = InitializeSQLite()
+
+	if err != nil {
+		return err
+	}
+
+	return err
+
 }
 
-func GetLoger() *Logger {
+func GetLoger(prefix string) *Logger {
 	if logger == nil {
-		logger = newLoger("")
+		logger = newLoger(prefix)
 	}
 
 	return logger
