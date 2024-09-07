@@ -5,12 +5,12 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func InitializeOppeningRoutes(router *gin.RouterGroup) {
-	oppeningsRouter := router.Group("/oppenings")
+func InitializeOpeningRoutes(router *gin.RouterGroup) {
+	openingsRouter := router.Group("/openings")
 
-	oppeningsRouter.GET("/", handler.ListOppeningsHandler)
-	oppeningsRouter.GET("/:id", handler.FindOppeningHandler)
-	oppeningsRouter.POST("/", handler.CreateOppeningHandler)
-	oppeningsRouter.DELETE("/:id", handler.DeleteOppeningHandler)
-	oppeningsRouter.PUT("/:id", handler.UpdateOppeningHandler)
+	openingsRouter.GET("/", handler.ListOpeningsHandler)
+	openingsRouter.GET("/:id", handler.FindOpeningHandler)
+	openingsRouter.POST("/", handler.CreateOpeningHandler)
+	openingsRouter.DELETE("/:id", handler.DeleteOpeningHandler)
+	openingsRouter.PUT("/:id", handler.UpdateOpeningHandler)
 }
