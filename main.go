@@ -6,10 +6,9 @@ import (
 )
 
 func main() {
-	err := config.InitializeDatabaseConnection()
-	logger := config.GetLoger()
+	logger := config.GetLoger("main")
 
-	if err != nil {
+	if err := config.Init(); err != nil {
 		logger.Errorf("config initialization error: %v", err)
 		return
 	}
