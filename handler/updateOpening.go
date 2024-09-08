@@ -11,12 +11,14 @@ import (
 func UpdateOpeningHandler(ctx *gin.Context) {
 	id := ctx.Param("id")
 
-	if err := db.First(&schemas.Opening{}, id).Error; err != nil {
+	opening := schemas.Opening{}
+
+	if err := db.First(&opening, id).Error; err != nil {
 		SendErrorJSONResponse(ctx, http.StatusNotFound, fmt.Sprintf("Opening not found with id: %v", id))
 		return
 	}
 
-	request := new(CreateOpening)
+	request := new(UpdateOpening)
 
 	ctx.BindJSON(request)
 
@@ -25,12 +27,10 @@ func UpdateOpeningHandler(ctx *gin.Context) {
 		return
 	}
 
-	opening := request.GetOpening()
-
-	if err := db.Create(opening).Error; err != nil {
-		SendErrorJSONResponse(ctx, http.StatusBadRequest, err.Error())
+	if err := db.Model(&opening).Updates(request).Error; err != nil {
+		SendErrorJSONResponse(ctx, http.StatusInternalServerError, "error when updating opening")
 		return
 	}
 
-	SendJSONResponse(ctx, http.StatusCreated, gin.H{"data": opening, "message": "opening created successfully!"})
+	SendJSONResponse(ctx, http.StatusNoContent, gin.H{})
 }
