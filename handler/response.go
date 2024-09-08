@@ -7,7 +7,7 @@ func SendErrorJSONResponse(ctx *gin.Context, code int, message string) {
 	ctx.JSON(code, gin.H{"error": message})
 }
 
-func SendJSONResponse(ctx *gin.Context, code int, message map[string]any) {
+func SendJSONResponse(ctx *gin.Context, code int, content any) {
 	ctx.Header("content-type", "application/json")
-	ctx.JSON(code, message)
+	ctx.JSON(code, gin.H{"data": content})
 }

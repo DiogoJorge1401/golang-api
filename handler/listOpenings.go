@@ -14,5 +14,5 @@ func ListOpeningsHandler(ctx *gin.Context) {
 		SendErrorJSONResponse(ctx, http.StatusInternalServerError, "error when fetching openings")
 	}
 
-	SendJSONResponse(ctx, http.StatusOK, gin.H{"data": openings})
+	SendJSONResponse(ctx, http.StatusOK, openings)
 }

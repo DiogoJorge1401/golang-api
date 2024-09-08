@@ -17,5 +17,5 @@ func FindOpeningHandler(ctx *gin.Context) {
 		return
 	}
 
-	SendJSONResponse(ctx, http.StatusOK, gin.H{"data": opening})
+	SendJSONResponse(ctx, http.StatusOK, opening)
 }

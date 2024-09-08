@@ -23,5 +23,5 @@ func CreateOpeningHandler(ctx *gin.Context) {
 		return
 	}
 
-	SendJSONResponse(ctx, http.StatusCreated, gin.H{"data": opening, "message": "opening created successfully!"})
+	SendJSONResponse(ctx, http.StatusCreated, opening)
 }
