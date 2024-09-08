@@ -13,6 +13,12 @@ import (
 
 func MalformedBodyMiddleware(c *gin.Context) {
 	bodyBytes, err := c.GetRawData()
+
+	if len(bodyBytes) == 0 {
+		c.Next()
+		return
+	}
+
 	if err != nil {
 		handler.SendErrorJSONResponse(c, http.StatusBadRequest, "Unable to read request body")
 		c.Abort()
