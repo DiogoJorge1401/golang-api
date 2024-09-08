@@ -1,12 +1,11 @@
 package handler
 
 import (
-	"errors"
 	"fmt"
+	"net/http"
 
 	"github.com/DiogoJorge1401/golang-api/schemas"
 	"github.com/gin-gonic/gin"
-	"gorm.io/gorm"
 )
 
 func DeleteOpeningHandler(ctx *gin.Context) {
@@ -14,13 +13,16 @@ func DeleteOpeningHandler(ctx *gin.Context) {
 
 	id := ctx.Param("id")
 
-	if result := db.First(opening, id); errors.Is(result.Error, gorm.ErrRecordNotFound) {
-		SendErrorJSONResponse(ctx, 404, fmt.Sprintf("Opening not found with id: %v", id))
+	if err := db.First(opening, id).Error; err != nil {
+		SendErrorJSONResponse(ctx, http.StatusNotFound, fmt.Sprintf("Opening not found with id: %v", id))
 		return
 	}
 
-	db.Delete(opening)
+	if err := db.Delete(opening).Error; err != nil {
+		SendErrorJSONResponse(ctx, http.StatusInternalServerError, fmt.Sprintf("Error when deleting opening with id: %v", id))
+		return
+	}
 
-	SendJSONResponse(ctx, 204, gin.H{})
+	SendJSONResponse(ctx, http.StatusNoContent, gin.H{})
 
 }

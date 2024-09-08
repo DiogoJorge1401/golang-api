@@ -1,6 +1,8 @@
 package handler
 
 import (
+	"net/http"
+
 	"github.com/DiogoJorge1401/golang-api/schemas"
 	"github.com/gin-gonic/gin"
 )
@@ -8,7 +10,9 @@ import (
 func ListOpeningsHandler(ctx *gin.Context) {
 	openings := []schemas.Opening{}
 
-	db.Find(&openings)
+	if err := db.Find(&openings).Error; err != nil {
+		SendErrorJSONResponse(ctx, http.StatusInternalServerError, "error when fetching openings")
+	}
 
-	SendJSONResponse(ctx, 200, gin.H{"data": openings})
+	SendJSONResponse(ctx, http.StatusOK, gin.H{"data": openings})
 }
