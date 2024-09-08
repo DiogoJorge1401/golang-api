@@ -7,6 +7,10 @@ import (
 	"github.com/DiogoJorge1401/golang-api/schemas"
 )
 
+func errParamIsRequired(name, tpe string) error {
+	return fmt.Errorf("param: %v (type: %v) is required", name, tpe)
+}
+
 type CreateOpening struct {
 	Role     string `json:"role"`
 	Company  string `json:"company"`
@@ -14,10 +18,6 @@ type CreateOpening struct {
 	Remote   *bool  `json:"remote"`
 	Link     string `json:"link"`
 	Salary   int    `json:"salary"`
-}
-
-func errParamIsRequired(name, tpe string) error {
-	return fmt.Errorf("param: %v (type: %v) is required", name, tpe)
 }
 
 func (c *CreateOpening) Validate() error {
@@ -55,4 +55,21 @@ func (c *CreateOpening) GetOpening() *schemas.Opening {
 		Link:     c.Link,
 		Salary:   c.Salary,
 	}
+}
+
+type UpdateOpening struct {
+	Role     string `json:"role"`
+	Company  string `json:"company"`
+	Location string `json:"location"`
+	Remote   *bool  `json:"remote"`
+	Link     string `json:"link"`
+	Salary   int    `json:"salary"`
+}
+
+func (c *UpdateOpening) Validate() error {
+	if c.Role != "" || c.Company != "" || c.Location != "" || c.Remote != nil || c.Link != "" || c.Salary > 0 {
+		return nil
+	}
+
+	return fmt.Errorf("at leat one field must be provided")
 }
