@@ -6,6 +6,16 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// @BasePath /api/v1
+// @Router /openings [post]
+// @Summary Create Opening
+// @Description Create a new job opening
+// @Tags Openings
+// @Accept json
+// @Produce json
+// @Param request body CreateOpening true "Reques body"
+// @Success 201 {object} OpeningJSONReponse
+// @Failure 400 {object} ErrorResponse
 func CreateOpeningHandler(ctx *gin.Context) {
 	request := new(CreateOpening)
 
